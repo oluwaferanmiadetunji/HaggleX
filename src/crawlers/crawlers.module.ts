@@ -6,6 +6,6 @@ import { NestCrawlerModule } from 'nest-crawler';
 @Module({
   imports: [NestCrawlerModule],
   controllers: [CrawlersController],
-  providers: [CrawlersService]
+  providers: [CrawlersService],
 })
-export class CrawlersModule { }
+export class CrawlersModule {}

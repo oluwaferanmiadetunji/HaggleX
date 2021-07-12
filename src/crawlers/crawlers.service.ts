@@ -1,33 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { NestCrawlerService } from 'nest-crawler';
+import { CrawlerResponse } from 'src/types/crawler';
 
 @Injectable()
 export class CrawlersService {
-    constructor(
-        private readonly crawler: NestCrawlerService,
-    ) { }
+  constructor(private readonly crawler: NestCrawlerService) {}
 
-    public async scrape(): Promise<void> {
-        interface ExampleCom {
-            title: string;
-            info: string;
-        }
+  public async scrape(): Promise<CrawlerResponse> {
+    const data: CrawlerResponse = await this.crawler.fetch({
+      target: 'http://books.toscrape.com/index.html',
+      fetch: {
+        title: 'title',
+        description: {
+          selector: 'meta[name="description"]',
+          attr: 'content',
+        },
+        largestImage: {
+          selector: 'img',
+          attr: 'src',
+        },
+      },
+    });
 
-        const data: any = await this.crawler.fetch({
-            target: 'http://books.toscrape.com/index.html',
-            fetch: {
-                title: 'h1',
-                info: {
-                    selector: 'p > a',
-                    attr: 'href',
-                },
-            },
-        });
-
-        return data
-        // {
-        //   title: 'Example Domain',
-        //   info: 'http://www.iana.org/domains/example'
-        // }
-    }
+    return data;
+  }
 }

@@ -5,7 +5,7 @@ import { NestCrawlerModule } from 'nest-crawler';
 import { CrawlersModule } from './crawlers/crawlers.module';
 
 @Module({
-  imports: [NestCrawlerModule, CrawlersModule],
+  imports: [NestCrawlerModule, CrawlersModule,],
   controllers: [AppController],
   providers: [AppService],
 })
